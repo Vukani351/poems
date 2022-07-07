@@ -6,8 +6,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent  implements OnInit {
-  
+export class AppComponent implements OnInit {
   readonly url = 'https://poetrydb.org/title/';
   readonly poemsUrl = 'https://poetrydb.org/title/john';
   faves = [];
@@ -18,13 +17,20 @@ export class AppComponent  implements OnInit {
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
+  showAuth() {
+    setInterval(() => {
+      while (!this.poems) {
+        console.log('checking \n');
+        console.log(this.poemName + '\n is it');
+      }
+    }, 500);
+    console.log(this.poemName + '\n is it');
+  }
 
   searchByAuthor(author: string) {
-    // this.http.get(this.poemsUrl + author).subscribe((data) => {
-    //   console.log(data);
-    // });
-    console.log(this.poemName);
-
+    this.http.get(this.poemsUrl + author).subscribe((data) => {
+      this.poems = data;
+    });
   }
 
   getPoems() {

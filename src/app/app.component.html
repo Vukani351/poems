@@ -3,7 +3,7 @@
 </button> -->
 
 <div id="poemsContainer">
-  <div class="container mx-auto px-4 py-14 sm:px-6 xl:px-12">
+  <div class="container mx-auto w-full mt-12 px-4 py-14 sm:px-6 bg-slate-300 md:my-8 md:mt-0 md:w-1/2 xl:px-12">
     <div
       class="flex flex-col items-center justify-center space-y-6 text-center"
     >
@@ -14,7 +14,6 @@
         Hey there, This is a tool for you to search for poems you like or poems
         you reading currently.
       </p>
-      <p>Enjoy!!.</p>
       <div
         class="
           flex
@@ -28,7 +27,7 @@
       >
         <input
           type="text"
-          
+          #myTitle (keyup)="searchByAuthor(myTitle.value)"
           class="
             w-full
             rounded-md
@@ -43,7 +42,7 @@
           [name]="poemName"
         />
         <button
-          type="submit"
+          type="button"
           class="
             w-full
             rounded-md
@@ -64,6 +63,7 @@
             disabled:hover:bg-blue-500
             sm:max-w-max
           "
+          (click)="showAuth()"
         >
           Search
         </button>
