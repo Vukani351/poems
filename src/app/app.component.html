@@ -9,7 +9,7 @@
       py-14
       sm:px-6
       bg-slate-300
-      md:my-8 md:mt-0 md:w-1/2
+      md:my-8 md:mt-24 md:w-1/2
       xl:px-12
     "
   >
@@ -84,6 +84,7 @@
           <div class="mb-3 xl:w-96">
             <select
               class="
+                ml-6
                 form-select
                 appearance-none
                 block
@@ -105,9 +106,11 @@
               "
               [disabled]="!results"
             >
-              <option selected>Poem Search Result</option>
+              <option selected class="bg-green-300 border-2 border-green-400">
+                Poem Search Result
+              </option>
               <option *ngFor="let result of results; index as i" value="i">
-                {{ results[i] }}
+                poem {{ i + 1 }}:{{ results[i] }}
               </option>
             </select>
           </div>
