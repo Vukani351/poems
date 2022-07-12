@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
     if (author == '') {
       this.results = undefined;
     } else {
+      this.results = [];
       this.http.get(this.url + author).subscribe((data: any[]) => {
         this.results = data.map((d) => {
           return d.title;
