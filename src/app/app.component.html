@@ -1,9 +1,18 @@
-<!-- <button (click)="getPoems()" class="border-2 bg-blue-300 mx-3 border-blue-500">
-  get poems
-</button> -->
-
 <div id="poemsContainer">
-  <div class="container mx-auto w-full mt-12 px-4 py-14 sm:px-6 bg-slate-300 md:my-8 md:mt-0 md:w-1/2 xl:px-12">
+  <div
+    class="
+      container
+      mx-auto
+      w-full
+      mt-12
+      px-4
+      py-14
+      sm:px-6
+      bg-slate-300
+      md:my-8 md:mt-0 md:w-1/2
+      xl:px-12
+    "
+  >
     <div
       class="flex flex-col items-center justify-center space-y-6 text-center"
     >
@@ -14,6 +23,7 @@
         Hey there, This is a tool for you to search for poems you like or poems
         you reading currently.
       </p>
+
       <div
         class="
           flex
@@ -27,7 +37,8 @@
       >
         <input
           type="text"
-          #myTitle (keyup)="searchByAuthor(myTitle.value)"
+          #myTitle
+          (keyup)="searchByAuthor(myTitle.value)"
           class="
             w-full
             rounded-md
@@ -39,7 +50,7 @@
             disabled:cursor-not-allowed disabled:opacity-50
           "
           placeholder="poem name"
-          (name)="poemName"
+          (name)="(poemName)"
         />
         <button
           type="button"
@@ -68,6 +79,41 @@
           Search
         </button>
       </div>
+      <div>
+        <div class="flex">
+          <div class="mb-3 xl:w-96">
+            <select
+              class="
+                form-select
+                appearance-none
+                block
+                w-full
+                py-1.5
+                text-base
+                font-normal
+                text-gray-700
+                bg-white bg-clip-padding bg-no-repeat
+                border border-solid border-gray-300
+                rounded
+                transition
+                ease-in-out
+                m-0
+                focus:text-gray-700
+                focus:bg-white
+                focus:border-blue-600
+                focus:outline-none
+              "
+              [disabled]="!results"
+            >
+              <option selected>Poem Search Result</option>
+              <option *ngFor="let result of results; index as i" value="i">
+                {{ results[i] }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <form
         class="
           flex

@@ -12,12 +12,15 @@ export class AppComponent implements OnInit {
   faves = [];
   poems: any;
   poemName: string;
+  results: any[];
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    // this.results = ['1', '2', '3'];
     throw new Error('Method not implemented.');
   }
-  
+
   showAuth() {
     setInterval(() => {
       while (!this.poems) {
@@ -29,9 +32,15 @@ export class AppComponent implements OnInit {
   }
 
   searchByAuthor(author: string) {
-    this.http.get(this.url + author).subscribe((data) => {
-      this.poems = data;
-    });
+    if (author == '') {
+      this.results = undefined;
+    } else {
+      this.http.get(this.url + author).subscribe((data: any[]) => {
+        this.results = data.map((d) => {
+          return d.title;
+        });
+      });
+    }
   }
 
   getPoems() {
