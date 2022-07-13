@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   poems: any;
   poemName: string;
   results: any[];
-  results2: any;
+  results2: any[];
 
   constructor(private http: HttpClient) {}
 
@@ -34,7 +34,8 @@ export class AppComponent implements OnInit {
   }
 
   searchByAuthor(author: string) {
-    if (author == '') {
+    this.results2 = undefined;
+    if (author === '' || author === ' ') {
       this.results = undefined;
     } else {
       this.results = [];
@@ -46,12 +47,13 @@ export class AppComponent implements OnInit {
     }
   }
   searchByTitle(title: string) {
+    this.results = undefined;
     if (title == '') {
       this.results2 = undefined;
     } else {
       this.results = [];
       this.http.get(this.urlTitle + title).subscribe((data: any[]) => {
-        this.results = data.map((d) => {
+        this.results2 = data.map((d) => {
           return d.title;
         });
       });

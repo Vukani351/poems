@@ -13,9 +13,7 @@
       xl:px-12
     "
   >
-    <div
-      class="flex flex-col items-center justify-center space-y-6 text-center"
-    >
+    <div class="sm:flex sm:flex-col justify-center space-y-6 text-center">
       <h1 class="text-4xl font-bold tracking-normal sm:text-5xl lg:text-6xl">
         Poems Search
       </h1>
@@ -24,21 +22,11 @@
         you reading currently.
       </p>
 
-      <div
-        class="
-          flex
-          w-full
-          max-w-md
-          flex-col
-          items-center
-          space-y-3
-          sm:flex-row sm:space-y-0 sm:space-x-3
-        "
-      >
+      <div class="grid grid-row gap-4">
         <input
           type="text"
-          #myTitle
-          (keyup)="searchByAuthor(myTitle.value)"
+          #myAuthor
+          (keyup)="searchByAuthor(myAuthor.value)"
           class="
             w-full
             rounded-md
@@ -46,6 +34,7 @@
             bg-gray-50
             px-4
             py-2
+            md:mb-5
             focus:outline-none focus:ring-2 focus:ring-blue-500
             disabled:cursor-not-allowed disabled:opacity-50
           "
@@ -72,28 +61,24 @@
             disabled:opacity-50
             disabled:hover:border-blue-500
             disabled:hover:bg-blue-500
-            sm:max-w-max
           "
           (click)="showAuth()"
         >
           Search
         </button>
-      </div>
-      <div>
-        <div class="flex flex-col-2">
+        <div class="justify-self-center">
           <div class="mb-3 xl:w-96">
-            <ng-template [ngIf]="results" [ngIfElse]="loading">
+            <ng-template [ngIf]="results">
               <select
                 class="
-                  ml-6
                   form-select
                   appearance-none
                   block
-                  w-1/2
+                  w-11/12
                   py-1.5
-                  text-base
+                  text-center
                   font-normal
-                  text-gray-700
+                  text-blue-500
                   bg-white bg-clip-padding bg-no-repeat
                   border border-solid border-gray-300
                   rounded
@@ -109,173 +94,109 @@
                 <option selected class="bg-green-300 border-2 border-green-400">
                   Poem Search Result
                 </option>
-                <option *ngFor="let result of results; index as i" value="i">
+                <option
+                  *ngFor="let result of results; index as i"
+                  value="i"
+                  class="w-1/2 absolute"
+                >
                   poem {{ i + 1 }}:{{ results[i] }}
                 </option>
               </select>
             </ng-template>
-
-            <ng-template #loading>
-              <div>
-                <svg
-                  *ngIf="results"
-                  role="status"
+          </div>
+        </div>
+        <!-- second search bt title -->
+        <div class="grid grid-row gap-4">
+          <input
+            type="text"
+            #myTitle
+            (keyup)="searchByTitle(myTitle.value)"
+            class="
+              w-full
+              rounded-md
+              border
+              bg-gray-50
+              px-4
+              md:mb-5
+              py-2
+              focus:outline-none focus:ring-2 focus:ring-blue-500
+              disabled:cursor-not-allowed disabled:opacity-50
+            "
+            placeholder="Author Name"
+            (name)="(poemName)"
+          />
+          <button
+            type="button"
+            class="
+              w-full
+              rounded-md
+              border border-blue-500
+              bg-blue-500
+              py-2
+              px-6
+              text-white
+              transition
+              hover:border-blue-600 hover:bg-blue-600
+              focus:outline-none
+              focus:ring-4
+              focus:ring-blue-500
+              focus:ring-opacity-50
+              disabled:cursor-not-allowed
+              disabled:opacity-50
+              disabled:hover:border-blue-500
+              disabled:hover:bg-blue-500
+            "
+            (click)="showAuth()"
+          >
+            Search
+          </button>
+          <div class="justify-self-center">
+            <div class="mb-3 xl:w-96">
+              <ng-template [ngIf]="results2">
+                <select
                   class="
-                    my-5
-                    mx-auto
+                    form-select
+                    appearance-none
+                    block
+                    w-11/12
+                    py-1.5
                     text-center
-                    mb-5
-                    mr-2
-                    w-12
-                    h-12
-                    text-gray-200
-                    animate-spin
-                    dark:text-gray-600
-                    fill-blue-600
+                    font-normal
+                    text-blue-500
+                    bg-white bg-clip-padding bg-no-repeat
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    focus:text-gray-700
+                    focus:bg-white
+                    focus:border-blue-600
+                    focus:outline-none
                   "
-                  viewBox="0 0 100 101"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                  [disabled]="!results2"
                 >
-                  <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                    fill="currentColor"
-                  ></path>
-                  <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                    fill="currentFill"
-                  ></path>
-                </svg>
-              </div>
-            </ng-template>
+                  <option
+                    selected
+                    class="bg-green-300 border-2 border-green-400"
+                  >
+                    Poem Search Result
+                  </option>
+                  <option
+                    *ngFor="let result of results2; index as i"
+                    value="i"
+                    class="w-1/2 absolute left-0 bottom-0 "
+                  >
+                    poem {{ i + 1 }}:{{ results2[i] }}
+                  </option>
+                </select>
+              </ng-template>
+            </div>
           </div>
         </div>
       </div>
-
-      <form
-        class="
-          flex
-          w-full
-          max-w-md
-          flex-col
-          items-center
-          space-y-3
-          sm:flex-row sm:space-y-0 sm:space-x-3
-        "
-      >
-        <input
-          type="text"
-          #myTitle2
-          (keyup)="searchByTitle(myTitle2.value)"
-          class="
-            w-full
-            rounded-md
-            border
-            bg-gray-50
-            px-4
-            py-2
-            focus:outline-none focus:ring-2 focus:ring-blue-500
-            disabled:cursor-not-allowed disabled:opacity-50
-          "
-          placeholder="Poem Name"
-          
-        />
-        <button
-          type="submit"
-          class="
-            w-full
-            rounded-md
-            border border-blue-500
-            bg-blue-500
-            py-2
-            px-6
-            text-white
-            transition
-            hover:border-blue-600 hover:bg-blue-600
-            focus:outline-none
-            focus:ring-4
-            focus:ring-blue-500
-            focus:ring-opacity-50
-            disabled:cursor-not-allowed
-            disabled:opacity-50
-            disabled:hover:border-blue-500
-            disabled:hover:bg-blue-500
-            sm:max-w-max
-          "
-        >
-          Search
-        </button>
-        <div class="mb-3 xl:w-96">
-        <ng-template [ngIf]="results2" [ngIfElse]="loading2">
-          <select
-            class="
-              ml-6
-              form-select
-              appearance-none
-              block
-              w-1/2
-              py-1.5
-              text-base
-              font-normal
-              text-gray-700
-              bg-white bg-clip-padding bg-no-repeat
-              border border-solid border-gray-300
-              rounded
-              transition
-              ease-in-out
-              focus:text-gray-700
-              focus:bg-white
-              focus:border-blue-600
-              focus:outline-none
-            "
-            [disabled]="!results2"
-          >
-            <option selected class="bg-green-300 border-2 border-green-400">
-              Poem Search Result
-            </option>
-            <option *ngFor="let result2 of results; index as i" value="i">
-              poem {{ i + 1 }}:{{ results[i] }}
-            </option>
-          </select>
-        </ng-template>
-        <ng-template #loading2>
-          <div>
-            <svg
-              *ngIf="results"
-              role="status"
-              class="
-                my-5
-                mx-auto
-                text-center
-                mb-5
-                mr-2
-                w-12
-                h-12
-                text-gray-200
-                animate-spin
-                dark:text-gray-600
-                fill-blue-600
-              "
-              viewBox="0 0 100 101"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                fill="currentColor"
-              ></path>
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                fill="currentFill"
-              ></path>
-            </svg>
-          </div>
-        </ng-template>
-      </div>
-      </form>
     </div>
+    <span class="grid justify-items-center">
+      <app-poem></app-poem>
+    </span>
   </div>
 </div>
-<span class="grid justify-items-center">
-  <app-poem></app-poem>
-</span>
